@@ -1,38 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   print_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/13 20:25:09 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/14 02:28:07 by aaferyad         ###   ########.fr       */
+/*   Created: 2024/11/14 02:14:50 by aaferyad          #+#    #+#             */
+/*   Updated: 2024/11/14 02:23:14 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FTPRINTF
-#define FTPRINTF
+#include "ft_printf.h"
 
-#include <stdarg.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include "libft/libft.h"
 
-int ft_printf(const char *, ...);
-
-typedef struct	table_elements
+int	ft_putchar(char	c)
 {
-	int	(*f)(char c);
-} elements;
-typedef struct hash_table
+	return (write(1, &c, 1));
+}
+
+int	ft_puts(char *s)
 {
-	int	size;
-	elements *tb;
+	int	i;
 
-} table;
-
-table	*create_table(size_t size);
-elements	*create_elements(table *h_tb);
-int	ft_putchar(char	c);
-int	ft_puts(char *s);
-#endif
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i])
+		ft_putchar(s[i++]);
+	return (i);
+}
