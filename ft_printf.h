@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:25:09 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/14 02:28:07 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/14 16:10:09 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,25 @@
 #include <stdlib.h>
 #include "libft/libft.h"
 
-int ft_printf(const char *, ...);
-
 typedef struct	table_elements
 {
-	int	(*f)(char c);
-} elements;
+	int	(*f)(va_list arg);
+} elm;
+
 typedef struct hash_table
 {
 	int	size;
-	elements *tb;
+	int	index;
+	char	*sp;
+	elm	*table;
 
-} table;
+} tb;
 
-table	*create_table(size_t size);
-elements	*create_elements(table *h_tb);
-int	ft_putchar(char	c);
-int	ft_puts(char *s);
+int ft_printf(const char *s, ...);
+
+tb	*create_table(size_t size);
+elm	*create_elements(tb *h_tb);
+int	ft_putchar(va_list arg);
+int	ft_puts(va_list arg);
 
 #endif

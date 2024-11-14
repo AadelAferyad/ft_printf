@@ -4,8 +4,8 @@
 
 int	main(void)
 {
-	table	*h_tb;
-	elements	*sp;
+	tb	*h_tb;
+	elm	*sp;
 	size_t	size;
 
 	size = 9;
