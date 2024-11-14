@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
-int	gen_index_key(char c, va_list arg)
+int	gen_index_key(char c)
 {
 	int	index;
 
@@ -39,9 +40,10 @@ int	gen_index_key(char c, va_list arg)
 	return (index);
 }
 
-static int	checker(const char *s, va_list args)
+static int	checker(const char *s, va_list args, table *tb)
 {
 	int	i;
+	int	index;
 
 	i = 0;
 	while (s[i])
@@ -51,24 +53,35 @@ static int	checker(const char *s, va_list args)
 			i++;
 			if (ft_strchr("csdiupxX%", s[i]))
 			{
-				gen_index_key(s[i], args);
+				index = gen_index_key(s[i]);
+				if (index == -1)
+					return (-1);
+				tb->htb[index].f(args);
 			}
+		}
+		else
+		{
+			write(1, &s[i], 1);
 		}
 		i++;
 	}
-	return
+	return (i);
 }
 
 int ft_printf(const char *s, ...)
 {
 	int	i;
 	va_list	arg;
+	table	*tb;
 
 	i = 0;
 	if (!s)
 		return (0);
+	tb = create_table(9);
+	create_elements(tb);
 	va_start(arg, s);
-	checker(s, arg);
+	fill_map(tb);
+	i = checker(s, arg, tb);
 	va_end(arg);
-	checker(s, arg);
+	return (i);
 }

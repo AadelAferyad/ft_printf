@@ -28,15 +28,18 @@ typedef struct hash_table
 	int	size;
 	int	index;
 	char	*sp;
-	elm	*table;
+	elm	*htb;
 
-} tb;
+} table;
 
 int ft_printf(const char *s, ...);
 
-tb	*create_table(size_t size);
-elm	*create_elements(tb *h_tb);
+table	*create_table(size_t size);
+elm	*create_elements(table *h_tb);
 int	ft_putchar(va_list arg);
 int	ft_puts(va_list arg);
+int	ft_putnbr(va_list arg);
+void	fill_map(table *tb);
+int	ft_putnbr(va_list arg);
 
 #endif

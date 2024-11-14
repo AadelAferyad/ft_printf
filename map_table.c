@@ -12,40 +12,34 @@
 
 #include "ft_printf.h"
 
-void	fill_map(tb *table)
+void	fill_map(table *tb)
 {
-	int	i;
-	int (*fun[10]) (va_list arg);
-
-	fun[0] = ft_putchar;
-	fun[1] = ft_puts;
-	fun[2] = NULL;
-	i = 0;
-	while (i < table->size)
-	{
-		table->table[i].f = fun[i];  
-		i++;
-	}
+	if (!tb)
+		return ;
+	tb->htb[0].f = ft_putchar;
+	tb->htb[1].f = ft_puts;
+	tb->htb[2].f = ft_putnbr;
+	tb->htb[3].f = NULL;
 }
 
-tb	*create_table(size_t size)
+table	*create_table(size_t size)
 {
-	tb	*ptr;
+	table	*ptr;
 
-	ptr = ft_calloc(1, sizeof(tb));
+	ptr = ft_calloc(1, sizeof(table));
 	if (!ptr)
 		return (NULL);
 	ptr->size = size;
 	return (ptr);
 }
 
-elm	*create_elements(tb	*h_tb)
+elm	*create_elements(table	*tb)
 {
 	elm	*ptr;
 
-	ptr = ft_calloc(h_tb->size, sizeof(elm));
+	ptr = ft_calloc(tb->size, sizeof(elm));
 	if (!ptr)
 		return (NULL);
-	h_tb->table = ptr;
+	tb->htb = ptr;
 	return (ptr);
 }
