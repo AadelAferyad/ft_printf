@@ -35,4 +35,5 @@ table	*create_table(size_t size);
 elements	*create_elements(table *h_tb);
 int	ft_putchar(char	c);
 int	ft_puts(char *s);
+
 #endif
