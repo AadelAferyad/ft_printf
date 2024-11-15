@@ -48,16 +48,12 @@ static int	checker(const char *s, va_list args, format *tb)
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '%' && s[i + 1])
+		if (s[i] == '%' && s[i + 1] && ft_strchr("csdiupxX%", s[++i]))
 		{
-			i++;
-			if (ft_strchr("csdiupxX%", s[i]))
-			{
-				index = gen_index_key(s[i]);
-				if (index == -1)
-					return (-1);
-				tb[index].f(args);
-			}
+			index = gen_index_key(s[i]);
+			if (index == -1)
+				return (-1);
+			tb[index].f(args);
 		}
 		else
 		{
