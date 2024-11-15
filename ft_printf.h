@@ -18,28 +18,20 @@
 #include <stdlib.h>
 #include "libft/libft.h"
 
-typedef struct	table_elements
+typedef struct	format_specifaier
 {
+	char	sep;
 	int	(*f)(va_list arg);
-} elm;
-
-typedef struct hash_table
-{
-	int	size;
-	int	index;
-	char	*sp;
-	elm	*htb;
-
-} table;
+	struct format_specifaier *next;
+} format;
 
 int ft_printf(const char *s, ...);
 
-table	*create_table(size_t size);
-elm	*create_elements(table *h_tb);
+format	*create_array(size_t size);
 int	ft_putchar(va_list arg);
 int	ft_puts(va_list arg);
 int	ft_putnbr(va_list arg);
-void	fill_map(table *tb);
+void	fill_map(format *fr);
 int	ft_putnbr(va_list arg);
 
 #endif

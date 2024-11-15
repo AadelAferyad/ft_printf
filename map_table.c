@@ -12,34 +12,26 @@
 
 #include "ft_printf.h"
 
-void	fill_map(table *tb)
+void	fill_map(format	*fr)
 {
-	if (!tb)
+	if (!fr)
 		return ;
-	tb->htb[0].f = ft_putchar;
-	tb->htb[1].f = ft_puts;
-	tb->htb[2].f = ft_putnbr;
-	tb->htb[3].f = NULL;
+	fr[0].f = ft_putchar;
+	fr[0].sep = 'c';
+	fr[1].f = ft_puts;
+	fr[1].sep = 's';
+	fr[2].f = ft_putnbr;
+	fr[2].sep = 'd';
+	fr[3].f = NULL;
 }
 
-table	*create_table(size_t size)
+format	*create_array(size_t size)
 {
-	table	*ptr;
+	format	*ptr;
 
-	ptr = ft_calloc(1, sizeof(table));
+	ptr = ft_calloc(size, sizeof(format));
 	if (!ptr)
 		return (NULL);
-	ptr->size = size;
 	return (ptr);
 }
 
-elm	*create_elements(table	*tb)
-{
-	elm	*ptr;
-
-	ptr = ft_calloc(tb->size, sizeof(elm));
-	if (!ptr)
-		return (NULL);
-	tb->htb = ptr;
-	return (ptr);
-}

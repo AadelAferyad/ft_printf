@@ -40,7 +40,7 @@ int	gen_index_key(char c)
 	return (index);
 }
 
-static int	checker(const char *s, va_list args, table *tb)
+static int	checker(const char *s, va_list args, format *tb)
 {
 	int	i;
 	int	index;
@@ -56,7 +56,7 @@ static int	checker(const char *s, va_list args, table *tb)
 				index = gen_index_key(s[i]);
 				if (index == -1)
 					return (-1);
-				tb->htb[index].f(args);
+				tb[index].f(args);
 			}
 		}
 		else
@@ -72,16 +72,15 @@ int ft_printf(const char *s, ...)
 {
 	int	i;
 	va_list	arg;
-	table	*tb;
+	format	*fr;
 
 	i = 0;
 	if (!s)
 		return (0);
-	tb = create_table(9);
-	create_elements(tb);
+	fr = create_array(9);
 	va_start(arg, s);
-	fill_map(tb);
-	i = checker(s, arg, tb);
+	fill_map(fr);
+	i = checker(s, arg, fr);
 	va_end(arg);
 	return (i);
 }
