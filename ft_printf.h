@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:25:09 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/14 16:10:09 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/15 13:24:47 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ typedef struct	format_specifaier
 int ft_printf(const char *s, ...);
 
 format	*create_array(size_t size);
-int	ft_putchar(va_list arg);
-int	ft_puts(va_list arg);
-int	ft_putnbr(va_list arg);
+int	print_char(va_list arg);
+int	print_string(va_list arg);
+int	print_integer(va_list arg);
 void	fill_map(format *fr);
-int	ft_putnbr(va_list arg);
 
 #endif
