@@ -24,26 +24,6 @@ int	gen_index_key(char c, format *fr)
 			return (i);
 		i++;
 	}
-	/*if (c == 'c')*/
-	/*	index = 0;*/
-	/*else if (c == 's')*/
-	/*	index = 1;*/
-	/*else if (c == 'd')*/
-	/*	index = 2;*/
-	/*else if (c == 'i')*/
-	/*	index = 3;*/
-	/*else if (c == 'u')*/
-	/*	index = 4;*/
-	/*else if (c == 'p')*/
-	/*	index = 5;*/
-	/*else if (c == 'x')*/
-	/*	index = 6;*/
-	/*else if (c == 'X')*/
-	/*	index = 7;*/
-	/*else if (c == '%')*/
-	/*	index = 8;*/
-	/*else*/
-	/*	index = -1;*/
 	return (-1);
 }
 

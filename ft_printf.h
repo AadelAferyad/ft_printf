@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:25:09 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/15 13:24:47 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:40:26 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ int	print_char(va_list arg);
 int	print_string(va_list arg);
 int	print_integer(va_list arg);
 void	fill_map(format *fr);
+int	print_unsigned(va_list arg);
+int	ft_putnbr_unsigned(unsigned int b);
 
 #endif
