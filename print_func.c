@@ -34,6 +34,11 @@ int	print_string(va_list arg)
 	return (ft_puts(s));
 }
 
+int	print_percentage(va_list arg)
+{
+	(void) arg;
+	return (ft_putchar('%'));
+}
 
 int	print_integer(va_list arg)
 {
@@ -49,4 +54,55 @@ int	print_unsigned(va_list arg)
 
 	n = (unsigned int) va_arg(arg, unsigned int);
 	return (ft_putnbr_unsigned(n));
+}
+
+/*int	print_address_helper(unsigned long int hex, char c)*/
+/*{*/
+/*	int	count;*/
+/**/
+/*	count = 0;*/
+/*	if (hex / 16)*/
+/*		count += (print_hex(hex / 16, c));*/
+/*	if (hex % 16 < 10)*/
+/*		count += ft_putchar((hex % 16) + 48);*/
+/*	else */
+/*		count += ft_putchar((hex % 16) - 10 + c);*/
+/*	return (count);*/
+/*}*/
+
+int	print_address_helper(unsigned long hex)
+{
+	int	count;
+	int	i;
+	char	*p;
+
+	p = malloc(sizeof(char) * 30);
+	if (!p)
+		return (-1);
+	count = 0;
+	i = 0;
+	while (hex > 0)
+	{
+		if (hex % 16 < 10)
+			p[i] = hex % 16 + 48;
+		else
+			p[i] = hex % 16 - 10 + 'a';
+		hex /= 16;
+		i++;
+	}
+	p[i] = '\0';
+	if (ft_reverse(p))
+		count = ft_puts(p);
+	free(p);
+	return (count);
+}
+
+int	print_address(va_list arg)
+{
+	unsigned long	a;
+
+	a = (unsigned long) va_arg(arg, void *);
+	if (!a)
+		return (ft_puts("(nil)"));
+	return (ft_puts("0x") + print_address_helper((unsigned long) a));
 }

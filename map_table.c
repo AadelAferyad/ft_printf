@@ -26,8 +26,16 @@ void	fill_map(format	*fr)
 	fr[3].sep = 'i';
 	fr[4].f = print_unsigned;
 	fr[4].sep = 'u';
-	fr[5].f = NULL;
-	fr[5].sep = 0;
+	fr[5].f = print_hex_lower;
+	fr[5].sep = 'x';
+	fr[6].f = print_hex_upper;
+	fr[6].sep = 'X';
+	fr[7].f = print_percentage;
+	fr[7].sep = '%';
+	fr[8].f = print_address;
+	fr[8].sep = 'p';
+	fr[9].f = NULL;
+	fr[9].sep = 0;
 }
 
 format	*create_array(size_t size)
@@ -39,4 +47,3 @@ format	*create_array(size_t size)
 		return (NULL);
 	return (ptr);
 }
-

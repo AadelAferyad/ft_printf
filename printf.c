@@ -31,8 +31,10 @@ static int	checker(const char *s, va_list args, format *tb)
 {
 	int	i;
 	int	index;
+	int	count;
 
 	i = 0;
+	count = 0;
 	while (s[i])
 	{
 		if (s[i] == '%' && s[++i] && ft_strchr("csdiupxX%", s[i]))
@@ -40,22 +42,22 @@ static int	checker(const char *s, va_list args, format *tb)
 			index = gen_index_key(s[i], tb);
 			if (index == -1)
 				return (-1);
-			tb[index].f(args);
+			count += tb[index].f(args);
 		}
 		else if (s[i])
 		{
-			write(1, &s[i], 1);
+			count += write(1, &s[i], 1);
 		}
 		else
 			break ;
 		i++;
 	}
-	return (i);
+	return (count);
 }
 
-int ft_printf(const char *s, ...)
+int	ft_printf(const char *s, ...)
 {
-	int	i;
+	int		i;
 	va_list	arg;
 	format	*fr;
 
@@ -63,9 +65,12 @@ int ft_printf(const char *s, ...)
 	if (!s)
 		return (0);
 	fr = create_array(9);
+	if (!fr)
+		return (-1);
 	va_start(arg, s);
 	fill_map(fr);
 	i = checker(s, arg, fr);
+	free(fr);
 	va_end(arg);
 	return (i);
 }

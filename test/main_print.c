@@ -1,26 +1,16 @@
 #include "../ft_printf.h"
 #include <stdio.h>
 
-int	print_hex_lower(int hex)
-{
-	if (hex / 16)
-		print_hex_lower(hex / 16);
-	if (hex > 9 && hex < 16)
-		return (1 + ft_putchar(hex - 10 + 'a'));
-	else
-		return (1 + ft_putchar(hex + 48));
-	return (0);
-}
 
 int	main(void)
 {
 	/*ft_printf("hello %c\n %s\n%d\n%d\n%d\n%u\n", 'z', "test", 0, 1337, -1337, -222);*/
-	print_hex_lower(255);
-	printf("\n");
-	print_hex_lower(15);
-	printf("\n");
-	print_hex_lower(5432);
-	printf("\n");
-	/*printf("%x\n", 14);*/
+	int	i;
+	/*i = ft_printf("%c %s %d %u %i %x %X %% %%%c\n%p\n%p", 'c', "hello", 1337, 0, 42, 25512323, 312255923, 65, "t", &i);*/
+	i = ft_printf("%p\n%p\n", "hello", &i);
+	printf("%d\n\n", i);
+	/*i = printf("%c %s %d %u %i %x %X %% %%%c\n%p\n%p", 'c', "hello", 1337, 0, 42, 25512323, 312255923, 65, "t", &i);*/
+	i = printf("%p\n%p\n", "hello", &i);
+	printf("%d\n\n", i);
 	return (0);
 }

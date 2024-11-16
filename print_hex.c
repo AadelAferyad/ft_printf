@@ -12,18 +12,32 @@
 
 #include "ft_printf.h"
 
-int	print_hex_lower(int hex)
+int	print_hex(int hex, char c)
 {
-	int	i;
+	int	count;
 
-	i = 0;
-
+	count = 0;
+	if (hex / 16)
+		count += (print_hex(hex / 16, c));
+	if (hex % 16 < 10)
+		count += ft_putchar((hex % 16) + 48);
+	else
+		count += ft_putchar((hex % 16) - 10 + c);
+	return (count);
 }
 
-int	print_hex(va_list arg)
+int	print_hex_lower(va_list arg)
 {
 	int	hex;
 
 	hex = va_arg(arg, int);
-	return (print_hex_lower(hex));
+	return (print_hex(hex, 'a'));
+}
+
+int	print_hex_upper(va_list arg)
+{
+	int	hex;
+
+	hex = va_arg(arg, int);
+	return (print_hex(hex, 'A'));
 }

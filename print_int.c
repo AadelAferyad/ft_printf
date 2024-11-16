@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-static int	ft_count_len(long nb)
+int	ft_count_len(long nb)
 {
 	int	len;
 
@@ -25,7 +25,7 @@ static int	ft_count_len(long nb)
 	return (len);
 }
 
-static int	ft_count_div(int len)
+int	ft_count_div(int len)
 {
 	int	div;
 
@@ -38,7 +38,7 @@ static int	ft_count_div(int len)
 	return (div);
 }
 
-static int	ft_writer(long nb, int div)
+int	ft_writer(unsigned nb, int div)
 {
 	int	len;
 	char	n;
@@ -61,7 +61,6 @@ int	ft_putnbr_unsigned(unsigned int n)
 
 	len = ft_count_len(n);
 	div = ft_count_div(len);
-	return (ft_writer(n, div));
-	
+	return (ft_writer(n, div));	
 }
 
