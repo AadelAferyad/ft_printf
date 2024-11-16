@@ -6,43 +6,43 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 01:59:15 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/15 13:37:29 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/16 17:04:42 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	fill_map(format	*fr)
+void	fill_map(fr *frm)
 {
-	if (!fr)
+	if (!frm)
 		return ;
-	fr[0].f = print_char;
-	fr[0].sep = 'c';
-	fr[1].f = print_string;
-	fr[1].sep = 's';
-	fr[2].f = print_integer;
-	fr[2].sep = 'd';
-	fr[3].f = print_integer;
-	fr[3].sep = 'i';
-	fr[4].f = print_unsigned;
-	fr[4].sep = 'u';
-	fr[5].f = print_hex_lower;
-	fr[5].sep = 'x';
-	fr[6].f = print_hex_upper;
-	fr[6].sep = 'X';
-	fr[7].f = print_percentage;
-	fr[7].sep = '%';
-	fr[8].f = print_address;
-	fr[8].sep = 'p';
-	fr[9].f = NULL;
-	fr[9].sep = 0;
+	frm[0].f = print_char;
+	frm[0].sep = 'c';
+	frm[1].f = print_string;
+	frm[1].sep = 's';
+	frm[2].f = print_integer;
+	frm[2].sep = 'd';
+	frm[3].f = print_integer;
+	frm[3].sep = 'i';
+	frm[4].f = print_unsigned;
+	frm[4].sep = 'u';
+	frm[5].f = print_hex_lower;
+	frm[5].sep = 'x';
+	frm[6].f = print_hex_upper;
+	frm[6].sep = 'X';
+	frm[7].f = print_percentage;
+	frm[7].sep = '%';
+	frm[8].f = print_address;
+	frm[8].sep = 'p';
+	frm[9].f = NULL;
+	frm[9].sep = 0;
 }
 
-format	*create_array(size_t size)
+fr	*create_array(size_t size)
 {
-	format	*ptr;
+	fr	*ptr;
 
-	ptr = ft_calloc(size, sizeof(format));
+	ptr = ft_calloc(size, sizeof(fr));
 	if (!ptr)
 		return (NULL);
 	return (ptr);

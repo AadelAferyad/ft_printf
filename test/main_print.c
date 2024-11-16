@@ -4,13 +4,18 @@
 
 int	main(void)
 {
-	/*ft_printf("hello %c\n %s\n%d\n%d\n%d\n%u\n", 'z', "test", 0, 1337, -1337, -222);*/
 	int	i;
-	/*i = ft_printf("%c %s %d %u %i %x %X %% %%%c\n%p\n%p", 'c', "hello", 1337, 0, 42, 25512323, 312255923, 65, "t", &i);*/
-	i = ft_printf("%p\n%p\n", "hello", &i);
-	printf("%d\n\n", i);
-	/*i = printf("%c %s %d %u %i %x %X %% %%%c\n%p\n%p", 'c', "hello", 1337, 0, 42, 25512323, 312255923, 65, "t", &i);*/
-	i = printf("%p\n%p\n", "hello", &i);
-	printf("%d\n\n", i);
+	int	a;
+
+	a = 123456;
+	/*i = ft_printf("this is a test %d %c %s %i %u %x %X %% %p\n", 120, 'W', "working", 120, -1, 259, 255, &i);*/
+	/*ft_printf("%d\n", i);*/
+	/*i = printf("this is a test %d %c %s %i %u %x %X %% %p\n", 120, 'W', "working", 120, -1, 259, 255, &i);*/
+	/*ft_printf("%d\n", i);*/
+
+	i = printf("%-100da\n\n", a);
+	ft_printf("%d\n", i);
+	i = ft_printf("%-100sa\n\n", "hello abdo how are u today wth the weather");
+	ft_printf("%d\n", i);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 02:14:50 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/15 15:41:21 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/16 17:04:38 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int	print_string(va_list arg)
 
 	s = va_arg(arg, char *);
 	if (!s)
-	{
-		return (-1);
-	}
+		return(ft_puts("(null)"));
 	return (ft_puts(s));
 }
 
@@ -55,20 +53,6 @@ int	print_unsigned(va_list arg)
 	n = (unsigned int) va_arg(arg, unsigned int);
 	return (ft_putnbr_unsigned(n));
 }
-
-/*int	print_address_helper(unsigned long int hex, char c)*/
-/*{*/
-/*	int	count;*/
-/**/
-/*	count = 0;*/
-/*	if (hex / 16)*/
-/*		count += (print_hex(hex / 16, c));*/
-/*	if (hex % 16 < 10)*/
-/*		count += ft_putchar((hex % 16) + 48);*/
-/*	else */
-/*		count += ft_putchar((hex % 16) - 10 + c);*/
-/*	return (count);*/
-/*}*/
 
 int	print_address_helper(unsigned long hex)
 {
@@ -106,3 +90,17 @@ int	print_address(va_list arg)
 		return (ft_puts("(nil)"));
 	return (ft_puts("0x") + print_address_helper((unsigned long) a));
 }
+
+int	print_flags(int n, char c)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		ft_putchar(c);
+		i++;
+	}
+	return (i);
+}
+
