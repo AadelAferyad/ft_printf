@@ -27,6 +27,32 @@ int	gen_index_key(char c, fr *frm)
 	return (-1);
 }
 
+char	*set_of_flags(char *s, char *flags, a_fr *holder)
+{
+	char	*str;
+	int	len;
+
+	len = 0;
+	while (s[len] && ft_strchr(flags, s[len]))
+		len++;
+	str = ft_calloc(len + 1, sizeof(char));
+	if (!str)
+		return (NULL);
+	if (len > 1)
+	{
+		holder->combined = 1;
+		holder->nflags = len;
+	}
+	len = 0;
+	while (s[len] && ft_strchr(flags, s[len]))
+	{
+		str[len] = s[len];
+		len++;
+	}
+	str[len] = '\0';
+	return (str);
+}
+
 a_fr	*is_after_flag_valid(char *s, char *frmt)
 {
 	int	i;
@@ -49,7 +75,7 @@ a_fr	*is_after_flag_valid(char *s, char *frmt)
 			return (NULL);
 		}
 		ptr->index = i;
-		ptr->sp_flag = *s;
+		ptr->sp_flag = set_of_flags(s, "-0.# +", ptr);
 	}
 	return (ptr);
 }
@@ -57,12 +83,22 @@ a_fr	*is_after_flag_valid(char *s, char *frmt)
 int	call_flag_funcs(a_fr *data, fr *tb, va_list arg)
 {
 	int	count;
+	int	i;
 
 	count = 0;
-	if (data->sp_flag == '-')
+	i = 0;
+	while (data->sp_flag[i])
 	{
-		count += tb[gen_index_key(data->sp_format, tb)].f(arg);
-		count += print_flags(data->n - count, ' ');
+		if (data->sp_flag[i] == '-')
+		{
+			count += tb[gen_index_key(data->sp_format, tb)].f(arg);
+			count += print_flags(data->n - count, ' ');
+		}
+		else if (data->sp_flag[i] == '#')
+		{
+
+		}
+		i++;
 	}
 	return (count);
 }
@@ -78,6 +114,7 @@ a_fr	*flags_parser(char *s, fr *tb, char *frmt, va_list arg)
 		return (NULL);
 	count += call_flag_funcs(flag_holder, tb, arg);
 	flag_holder->count = count;
+	free(flag_holder->sp_flag);
 	return (flag_holder);
 }
 
@@ -145,7 +182,7 @@ int	ft_printf(const char *s, ...)
 	i = 0;
 	if (!s)
 		return (0);
-	frm = create_array(9);
+	frm = create_array(12);
 	if (!frm)
 		return (-1);
 	va_start(arg, s);

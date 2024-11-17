@@ -27,10 +27,12 @@ typedef struct	format_specifaier
 typedef struct after_format
 {
 	int	n;
-	char	sp_flag;
-	char	sp_format;
+	int	combined;
+	int	nflags;
 	int	index;
 	int	count;
+	char	*sp_flag;
+	char	sp_format;
 } a_fr;
 
 int ft_printf(const char *s, ...);
