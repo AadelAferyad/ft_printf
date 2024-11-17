@@ -1,0 +1,26 @@
+syntax : %[flags][width][.precision][length]specifier
+-----------------------------------------------------
+flags :
+	-: Left-justify the output (default is right-justified).
+	+: Always print a sign (+ for positive numbers, - for negative).
+	0: Pad with zeros instead of spaces.
+	#: For o, x, and X specifiers, it prefixes 0 for octal or 0x/0X for hexadecimal numbers.
+	(space): Leave a space before positive numbers to indicate sign (if no + sign is used).
+width :
+	any positive non zero numbers.
+
+precision :
+	.: Precision controls the number of digits to print for floating-point numbers or the number of characters to print from a string.
+
+length :
+	the number of digits or characters to print
+
+specifier :
+	%d
+	%i
+	%u
+	%c
+	%s
+	%x
+	%X
+	%p

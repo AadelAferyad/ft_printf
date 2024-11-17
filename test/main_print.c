@@ -13,6 +13,6 @@ int	main(void)
 	/*i = printf("this is a test %d %c %s %i %u %x %X %% %p\n", 120, 'W', "working", 120, -1, 259, 255, &i);*/
 	/*ft_printf("%d\n", i);*/
 
-	i = ft_printf("%#-10x2\n\n", 255);
+	i = ft_printf("%d\n\n", 255);
 	return (0);
 }

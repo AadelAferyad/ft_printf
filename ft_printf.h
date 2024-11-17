@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:25:09 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/16 17:04:45 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/17 13:48:20 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "libft/libft.h"
 
 typedef struct	format_specifaier
@@ -24,14 +25,23 @@ typedef struct	format_specifaier
 	int	(*f)(va_list arg);
 } fr;
 
+typedef struct precision_flag
+{
+	int	width;
+	int	precision;
+	int	length_preci;
+} pr;
+
 typedef struct after_format
 {
-	int	n;
-	int	combined;
-	int	nflags;
-	int	index;
+	int	minus;
+	int	zero;
+	int	hashtag;
+	int	space;
+	int	plus;
+	int	width;
+	pr	*perc;
 	int	count;
-	char	*sp_flag;
 	char	sp_format;
 } a_fr;
 
