@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/13 20:25:09 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/17 13:48:20 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/17 14:00:05 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,6 @@ typedef struct	format_specifaier
 	char	sep;
 	int	(*f)(va_list arg);
 } fr;
-
-typedef struct precision_flag
-{
-	int	width;
-	int	precision;
-	int	length_preci;
-} pr;
-
-typedef struct after_format
-{
-	int	minus;
-	int	zero;
-	int	hashtag;
-	int	space;
-	int	plus;
-	int	width;
-	pr	*perc;
-	int	count;
-	char	sp_format;
-} a_fr;
 
 int ft_printf(const char *s, ...);
 

@@ -6,11 +6,12 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:45:38 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/17 13:50:47 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/17 17:24:44 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "bonus_printf.h"
 
 int	gen_index_key(char c, fr *frm)
 {
@@ -54,6 +55,7 @@ int	checker(const char *s, va_list args, fr *tb)
 		if (s[i] == '%' && s[++i] )
 		{
 			count += check_format("csdiupxX%", s[i], tb, args);
+			check_flag("-0.# +", (char *) &s[i], tb, args);
 		}
 		else if (s[i])
 			count += write(1, &s[i], 1);
