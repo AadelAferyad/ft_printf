@@ -32,6 +32,7 @@ typedef struct after_format
 	int	width;
 	dot	*perc;
 	int	count;
+	int	len_data;
 	char	sp_format;
 } flags;
 

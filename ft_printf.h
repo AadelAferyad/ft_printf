@@ -41,4 +41,5 @@ int	print_percentage(va_list arg);
 int	print_address(va_list arg);
 
 int	print_flags(int n, char c);
+int	ft_count_len(long nb);
 #endif
