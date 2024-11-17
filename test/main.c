@@ -62,7 +62,8 @@ int	main(void)
 	/*printf("|% 8d|\n", 42);*/
 	/*printf("|% 8d|\n", 42);*/
 
-	i = printf("%10p|\n", &i);
+	i = 22;
+	i = printf("%+-10d|\n", i);
 	printf("%d%d\n", num, i);
 	return (0);
 }
