@@ -15,6 +15,8 @@
 
 #include "ft_printf.h"
 
+# define ON 1
+# define OFF 0
 
 typedef struct precision_flag
 {

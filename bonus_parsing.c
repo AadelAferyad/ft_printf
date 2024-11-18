@@ -115,60 +115,18 @@ int	validate_percision(flags *fg)
 	return (0);
 }
 
-void	validate_with_s(flags *fg)
+void	validate_flags_with_sp(flags *fg, int m, int z, int h, int space, int p)
 {
-	if (fg->hashtag)
-		fg->hashtag = 0;
-	if (fg->zero)
-		fg->zero = 0;
-}
-
-void	validate_with_d(flags *fg)
-{
-	if (fg->hashtag)
-		fg->hashtag = 0;
-}
-
-void	validate_with_c(flags *fg)
-{
-	if (fg->hashtag)
-		fg->hashtag = 0;
-	if (fg->zero)
-		fg->zero = 0;
-	if (fg->plus)
-		fg->plus = 0;
-	if (fg->space)
-		fg->space = 0;
-}
-
-void	validate_with_u(flags *fg)
-{
-	if (fg->hashtag)
-		fg->hashtag = 0;
-	if (fg->plus)
-		fg->plus = 0;
-	if (fg->space)
-		fg->space = 0;
-}
-
-void	validate_with_x(flags *fg)
-{
-	if (fg->plus)
-		fg->plus = 0;
-	if (fg->space)
-		fg->space = 0;
-}
-
-void	validate_with_p(flags *fg)
-{
-	if (fg->plus)
-		fg->plus = 0;
-	if (fg->space)
-		fg->space = 0;
-	if (fg->zero)
-		fg->zero = 0;
-	if (fg->hashtag)
-		fg->hashtag = 0;
+	if (m && fg->minus)
+		fg->minus = OFF;
+	if (z && fg->zero)
+		fg->zero = OFF;
+	if (h && fg->hashtag)
+		fg->hashtag = OFF;
+	if (space && fg->space)
+		fg->space = OFF;
+	if (p && fg->plus)
+		fg->plus = OFF;
 }
 
 void	validate_flags_with_spe(flags *fg)
@@ -177,21 +135,21 @@ void	validate_flags_with_spe(flags *fg)
 
 	c = fg->sp_format;
 	if (c == 's')
-		validate_with_s(fg);
+		validate_flags_with_sp(fg, 0, 0, 1, 0, 0);
 	else if (c == 'c')
-		validate_with_c(fg);
+		validate_flags_with_sp(fg, 0, 1, 1, 1, 1);
 	else if (c == 'd')
-		validate_with_d(fg);
+		validate_flags_with_sp(fg, 0, 0, 1, 0, 0);
 	else if (c == 'i')
-		validate_with_d(fg);
+		validate_flags_with_sp(fg, 0, 0, 1, 0, 0);
 	else if (c == 'u')
-		validate_with_u(fg);
+		validate_flags_with_sp(fg, 0, 0, 1, 1, 1);
 	else if (c == 'x')
-		validate_with_x(fg);
+		validate_flags_with_sp(fg, 0, 0, 0, 1, 1);
 	else if (c == 'X')
-		validate_with_x(fg);
+		validate_flags_with_sp(fg, 0, 0, 0, 1, 1);
 	else if (c == 'p')
-		validate_with_x(fg);
+		validate_flags_with_sp(fg, 0, 1, 1, 1, 1);
 }
 
 flags	*check_flag(char *flg, char *s, fr *tb, va_list arg)

@@ -34,6 +34,7 @@ int	print_integer(va_list arg);
 void	fill_map(fr *frm);
 int	print_unsigned(va_list arg);
 int	ft_putnbr_unsigned(unsigned int b);
+int	print_hex(int hex, char c);
 int	print_hex_upper(va_list arg);
 int	print_hex_lower(va_list arg);
 int	print_hex(int hex, char c);

@@ -13,10 +13,10 @@
 #include "ft_printf.h"
 #include <stdio.h>
 
-
 int	print_char(va_list arg)
 {
 	char	c;
+	char	*p;
 
 	c = va_arg(arg, int);
 	return (ft_putchar(c));

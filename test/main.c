@@ -63,7 +63,7 @@ int	main(void)
 	/*printf("|% 8d|\n", 42);*/
 
 	i = 22;
-	i = printf("%+-10d|\n", i);
+	i = printf("%s|\n", (char *)0);
 	printf("%d%d\n", num, i);
 	return (0);
 }

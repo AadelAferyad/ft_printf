@@ -1,6 +1,31 @@
 #include "../ft_printf.h"
 #include <stdio.h>
+#include <stdlib.h>
 
+char	*allocate_arg(char *s)
+{
+	char	*str;
+
+	if (!s)
+		return (NULL);
+	str = ft_strdup(s);
+	if (!str)
+		return (NULL);
+	return (str);
+}
+
+
+char	*allocate_char(char c)
+{
+	char	*str;
+
+	str = malloc(sizeof(char) * 2);
+	if (!str)
+		return (NULL);
+	str[0] = c;
+	str[1] = '\0';
+	return (str);
+}
 
 int	main(void)
 {
@@ -8,11 +33,9 @@ int	main(void)
 	int	a;
 
 	a = 123456;
-	/*i = ft_printf("this is a test %d %c %s %i %u %x %X %% %p\n", 120, 'W', "working", 120, -1, 259, 255, &i);*/
-	/*ft_printf("%d\n", i);*/
-	/*i = printf("this is a test %d %c %s %i %u %x %X %% %p\n", 120, 'W', "working", 120, -1, 259, 255, &i);*/
-	/*ft_printf("%d\n", i);*/
-
-	i = ft_printf("%d\n\n", 255);
+	char p = 'c';
+	char *c = &p;
+	char *s = allocate_arg(c);
+	printf("%s\n", s);
 	return (0);
 }
