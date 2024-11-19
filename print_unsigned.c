@@ -17,6 +17,8 @@ int	ft_count_len(long nb)
 	int	len;
 
 	len = 0;
+	if (nb < 0)
+		nb = -nb;
 	while (nb > 0)
 	{
 		nb /= 10;

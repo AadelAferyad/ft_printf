@@ -12,21 +12,73 @@
 
 #include "bonus_printf.h"
 
-void	count_len(void *add, flags *fg)
+void	count_len_d(va_list arg, flags *fg)
+{
+	va_list	temp;
+	int	n;
+
+	va_copy(temp, arg);
+	n = va_arg(temp, int);
+	fg->len_data = ft_count_len(n);
+}
+
+void	count_len_u(va_list arg, flags *fg)
+{
+	va_list	temp;
+	int	n;
+
+	va_copy(temp, arg);
+	n = va_arg(temp, unsigned int);
+	fg->len_data = ft_count_len(n);
+}
+
+void	count_len_s(va_list arg, flags *fg)
+{
+	va_list	temp;
+	char	*str;
+
+	va_copy(temp, arg);
+	str = va_arg(temp, char *);
+	fg->len_data = ft_strlen(str);
+}
+
+void	count_len_p(va_list arg, flags *fg)
+{
+	va_list	temp;
+	unsigned long long	ptr;
+
+	va_copy(temp, arg);
+	ptr = (unsigned long long) va_arg(temp, void *);
+	fg->len_data = print_address_helper(ptr, ON);
+}
+
+void	count_len_x(va_list arg, flags *fg)
+{
+	va_list	temp;
+	int	hex;
+
+	va_copy(temp, arg);
+	hex = va_arg(temp, int);
+	fg->len_data = print_hex(hex, ON, 'a');
+}
+
+void	count_len(va_list arg, flags *fg)
 {
 	char	c;
 
 	c = fg->sp_format;
 	if (c == 's')
-		fg->len_data = ft_strlen((char *)add);
+		count_len_s(arg, fg);
 	if (c == 'c')
 		fg->len_data = 1;
-	if (c == 'd' || c == 'i' || c == 'x')
-		fg->len_data = ft_count_len((long) add);
+	if (c == 'd' || c == 'i')
+		count_len_d(arg, fg);
+	if (c == 'u')
+		count_len_u(arg, fg);
 	if (c == 'p')
-		fg->len_data += print_address_helper((unsigned long) add, ON);
+		count_len_p(arg, fg);
 	if (c == 'x' || c == 'X')
-		fg->len_data += print_hex(((long) add), ON, 'a');
+		count_len_x(arg, fg);
 	if (fg->hashtag)
 		fg->len_data += 2;
 	if (fg->zero)
@@ -118,7 +170,7 @@ void	printer(flags *fg, va_list arg, fr *tb)
 {
 	int	count;
 	/**/
-	printf("hna minus %d, plus %d, space %d, hashtag %d, zero %d, format %c, width : %d\n", fg->minus, fg->plus, fg->space, fg->hashtag, fg->zero, fg->sp_format, fg->width);
+	/*printf("hna minus %d, plus %d, space %d, hashtag %d, zero %d, format %c, width : %d\n", fg->minus, fg->plus, fg->space, fg->hashtag, fg->zero, fg->sp_format, fg->width);*/
 	count = 0;
 	if (fg->space)
 		count += print_flag_char(fg, ' ');
@@ -141,12 +193,7 @@ void	printer(flags *fg, va_list arg, fr *tb)
 
 int	print_with_flags(flags *fg, va_list arg, fr *tb)
 {
-	va_list	tmp;
-	void	*add;
-
-	va_copy(tmp, arg);
-	add = va_arg(tmp, void *);
-	count_len(add, fg);
+	count_len(arg, fg);
 	printer(fg, arg, tb);
 	return (fg->count);
 }

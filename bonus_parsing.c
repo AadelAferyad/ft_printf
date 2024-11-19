@@ -36,7 +36,6 @@ int	set_flag_to_struct(char c, flags *fg)
 
 void	adjust_flag_bool(char c, flags *fg)
 {
-	printf("adjust : minus %d, zero %d\n", fg->minus, fg->zero);
 	if (c == '-')
 	{
 		fg->minus = ON;
@@ -45,7 +44,6 @@ void	adjust_flag_bool(char c, flags *fg)
 	}
 	else if (c == '0' && !fg->minus)
 		fg->zero = ON;
-	printf("adjust : minus %d, zero %d\n", fg->minus, fg->zero);
 }
 
 int	set_width(char *s, flags *fg)
@@ -150,9 +148,9 @@ void	validate_flags_with_spe(flags *fg)
 	else if (c == 'u')
 		validate_flags_with_sp(fg, 0, 0, 1, 1, 1);
 	else if (c == 'x')
-		validate_flags_with_sp(fg, 0, 0, 0, 1, 1);
+		validate_flags_with_sp(fg, 0, 0, 0, 0, 1);
 	else if (c == 'X')
-		validate_flags_with_sp(fg, 0, 0, 0, 1, 1);
+		validate_flags_with_sp(fg, 0, 0, 0, 0, 1);
 	else if (c == 'p')
 		validate_flags_with_sp(fg, 0, 1, 1, 1, 1);
 }
