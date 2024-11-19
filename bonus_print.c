@@ -21,11 +21,17 @@ void	count_len(void *add, flags *fg)
 		fg->len_data = ft_strlen((char *)add);
 	if (c == 'c')
 		fg->len_data = 1;
-	if (c == 'd' || c == 'i' || c == 'x' || c == 'u' || c == 'X')
+	if (c == 'd' || c == 'i' || c == 'x')
 		fg->len_data = ft_count_len((long) add);
+	if (c == 'p')
+		fg->len_data += print_address_helper((unsigned long) add, ON);
+	if (c == 'x' || c == 'X')
+		fg->len_data += print_hex(((long) add), ON, 'a');
 	if (fg->hashtag)
 		fg->len_data += 2;
 	if (fg->zero)
+		fg->len_data += 1;
+	if (fg->plus)
 		fg->len_data += 1;
 }
 
@@ -86,13 +92,34 @@ int	print_flag_minus(flags *fg)
 	}
 	return (i);
 }
+int	print_nbr_flag_plus(va_list arg)
+{
+	int	n;
+	int	count;
+
+	va_copy(arg, arg);
+	n = va_arg(arg, int);
+	count = 0;
+	if (n < 0)
+	{
+		if (n ==  -2147483648)
+		{
+			count = ft_putchar('2');
+			n =  147483648;
+		}
+		else
+			n = -n;
+	}
+	count += ft_putnbr(n);
+	return (count);
+}
 
 void	printer(flags *fg, va_list arg, fr *tb)
 {
 	int	count;
 	/**/
-	/*printf("hna minus %d, plus %d, space %d, hashtag %d, zero %d, format %c, width : %d\n", fg->minus, fg->plus, fg->space, fg->hashtag, fg->zero, fg->sp_format, fg->width);*/
-	count = fg->len_data;
+	printf("hna minus %d, plus %d, space %d, hashtag %d, zero %d, format %c, width : %d\n", fg->minus, fg->plus, fg->space, fg->hashtag, fg->zero, fg->sp_format, fg->width);
+	count = 0;
 	if (fg->space)
 		count += print_flag_char(fg, ' ');
 	if (fg->hashtag)
@@ -101,7 +128,12 @@ void	printer(flags *fg, va_list arg, fr *tb)
 		count += print_flag_plus(fg, arg);
 	if (fg->zero)
 		count += print_flag_char(fg, '0');
-	count += check_format(FORMAT, fg->sp_format, tb, arg);
+	if (fg->plus)
+	{
+		count += print_nbr_flag_plus(arg);
+	}
+	else
+		count += check_format(FORMAT, fg->sp_format, tb, arg);
 	if (fg->minus)
 		count += print_flag_minus(fg);
 	fg->count = count;

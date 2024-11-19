@@ -20,30 +20,32 @@
 int	set_flag_to_struct(char c, flags *fg)
 {
 	if (c == '-')
-		fg->minus = 1;
+		fg->minus = ON;
 	else if (c == '0')
-		fg->zero = 1;
+		fg->zero = ON;
 	else if (c == '#')
-		fg->hashtag = 1;
+		fg->hashtag = ON;
 	else if (c == ' ')
-		fg->space = 1;
+		fg->space = ON;
 	else if (c == '+')
-		fg->plus = 1;
+		fg->plus = ON;
 	else
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
 
 void	adjust_flag_bool(char c, flags *fg)
 {
+	printf("adjust : minus %d, zero %d\n", fg->minus, fg->zero);
 	if (c == '-')
 	{
-		fg->minus = 1;
+		fg->minus = ON;
 		if (fg->zero)
-			fg->zero = 0;
+			fg->zero = OFF;
 	}
 	else if (c == '0' && !fg->minus)
-		fg->zero = 1;
+		fg->zero = ON;
+	printf("adjust : minus %d, zero %d\n", fg->minus, fg->zero);
 }
 
 int	set_width(char *s, flags *fg)
@@ -54,7 +56,7 @@ int	set_width(char *s, flags *fg)
 	fg->width = ft_atoi(s);
 	while (s[i] >= '0' && s[i] <= '9')
 		i++;
-	if (!fg->minus && !fg->space)
+	if (!fg->minus && !fg->zero && !fg->space)
 		fg->space = ON;
 	return (i - (i > 0));
 }
@@ -163,7 +165,7 @@ int	check_flag(char *flg, char *s, fr *tb, va_list arg)
 	fg = create_flags_struct();
 	if (!fg)
 		return (0);
-	if (ft_strchr(flg, *s))
+	if (ft_strchr(flg, *s) || (*s >= '0' && *s <= '9'))
 	{
 		flag_parser(s, flg, fg);
 		if (!ft_strchr(FORMAT, fg->sp_format))
