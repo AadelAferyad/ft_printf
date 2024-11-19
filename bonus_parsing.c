@@ -54,6 +54,8 @@ int	set_width(char *s, flags *fg)
 	fg->width = ft_atoi(s);
 	while (s[i] >= '0' && s[i] <= '9')
 		i++;
+	if (!fg->minus && !fg->space)
+		fg->space = ON;
 	return (i - (i > 0));
 }
 

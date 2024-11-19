@@ -7,9 +7,9 @@ int	main(void)
 {
 	int	i;
 
-	i = printf("%-#10x|\n", 255);
+	i = printf("%10d|\n", 2);
 	ft_printf("%d\n", i);
-	i = ft_printf("%-#10x|\n", 255);
+	i = ft_printf("%10d|\n", 2);
 	ft_printf("%d\n", i);
 	return (0);
 }

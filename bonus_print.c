@@ -35,14 +35,18 @@ int	print_flag_char(flags *fg, char c)
 	int	size;
 
 	i = 0;
-	if (fg->minus || fg->zero)
+	if ((fg->minus || fg->zero) && fg->space)
+	{
+		fg->len_data++;
 		return (ft_putchar(' '));
+	}
 	size = fg->width - fg->len_data;
 	while (i < size)
 	{
 		ft_putchar(c);
 		i++;
 	}
+	fg->len_data += i;
 	return (i);
 }
 
@@ -55,13 +59,14 @@ int	print_flag_hashtag(flags *fg)
 	return (0);
 }
 
-int	print_flag_plus(va_list arg)
+int	print_flag_plus(flags *fg, va_list arg)
 {
 	va_list	tmp;
 	int	n;
 
 	va_copy(tmp, arg);
 	n = va_arg(tmp, int);
+	fg->len_data++;
 	if (n < 0)
 		return (ft_putchar('-'));
 	return (ft_putchar('+'));
@@ -93,7 +98,7 @@ void	printer(flags *fg, va_list arg, fr *tb)
 	if (fg->hashtag)
 		count += print_flag_hashtag(fg);
 	if (fg->plus)
-		count += print_flag_plus(arg);
+		count += print_flag_plus(fg, arg);
 	if (fg->zero)
 		count += print_flag_char(fg, '0');
 	count += check_format(FORMAT, fg->sp_format, tb, arg);
