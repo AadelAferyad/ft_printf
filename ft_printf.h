@@ -13,6 +13,9 @@
 #ifndef FTPRINTF
 #define FTPRINTF
 
+# define FLAGS "#0- .+"
+# define FORMAT "csdiupxX%"
+
 #include <stdarg.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -23,6 +26,7 @@ typedef struct	format_specifaier
 {
 	char	sep;
 	int	(*f)(va_list arg);
+	int	index;
 } fr;
 
 int ft_printf(const char *s, ...);
@@ -43,4 +47,5 @@ int	print_address(va_list arg);
 
 int	print_flags(int n, char c);
 int	ft_count_len(long nb);
+int	check_format(char *frmt, char c, fr *tb, va_list arg);
 #endif

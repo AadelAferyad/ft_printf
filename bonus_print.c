@@ -29,7 +29,7 @@ void	count_len(void *add, flags *fg)
 		fg->len_data += 1;
 }
 
-int	print_flag_char(flags *fg, va_list arg, char c)
+int	print_flag_char(flags *fg, char c)
 {
 	int	i;
 	int	size;
@@ -46,7 +46,7 @@ int	print_flag_char(flags *fg, va_list arg, char c)
 	return (i);
 }
 
-int	print_flag_hashtag(flags *fg, va_list arg)
+int	print_flag_hashtag(flags *fg)
 {
 	if (fg->sp_format == 'x')
 		return (ft_puts("0x"));
@@ -55,7 +55,7 @@ int	print_flag_hashtag(flags *fg, va_list arg)
 	return (0);
 }
 
-int	print_flag_plus(flags *fg, va_list arg)
+int	print_flag_plus(va_list arg)
 {
 	va_list	tmp;
 	int	n;
@@ -67,7 +67,7 @@ int	print_flag_plus(flags *fg, va_list arg)
 	return (ft_putchar('+'));
 }
 
-int	print_flag_minus(flags *fg, va_list arg)
+int	print_flag_minus(flags *fg)
 {
 	int	i;
 	int	size;
@@ -79,30 +79,37 @@ int	print_flag_minus(flags *fg, va_list arg)
 		ft_putchar(' ');
 		i++;
 	}
+	return (i);
 }
 
-int	printer(flags *fg, va_list arg)
+void	printer(flags *fg, va_list arg, fr *tb)
 {
+	int	count;
+	/**/
+	/*printf("hna minus %d, plus %d, space %d, hashtag %d, zero %d, format %c, width : %d\n", fg->minus, fg->plus, fg->space, fg->hashtag, fg->zero, fg->sp_format, fg->width);*/
+	count = fg->len_data;
 	if (fg->space)
-		print_flag_char(fg, arg, ' ');
+		count += print_flag_char(fg, ' ');
 	if (fg->hashtag)
-		print_flag_hashtag(fg, arg);
+		count += print_flag_hashtag(fg);
 	if (fg->plus)
-		print_flag_plus(fg, arg);
+		count += print_flag_plus(arg);
 	if (fg->zero)
-		print_flag_char(fg, arg, '0');
+		count += print_flag_char(fg, '0');
+	count += check_format(FORMAT, fg->sp_format, tb, arg);
 	if (fg->minus)
-		print_flag_minus(fg, arg);
+		count += print_flag_minus(fg);
+	fg->count = count;
 }
 
-int	print_with_flags(flags *fg, char *s, va_list arg)
+int	print_with_flags(flags *fg, va_list arg, fr *tb)
 {
 	va_list	tmp;
 	void	*add;
-	int		i;
 
-	i = 0;
 	va_copy(tmp, arg);
 	add = va_arg(tmp, void *);
 	count_len(add, fg);
+	printer(fg, arg, tb);
+	return (fg->count);
 }

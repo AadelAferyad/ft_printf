@@ -35,10 +35,12 @@ typedef struct after_format
 	dot	*perc;
 	int	count;
 	int	len_data;
+	int	index;
 	char	sp_format;
 } flags;
 
-flags	*check_flag(char *flg, char *s, fr *tb, va_list arg);
+int	check_flag(char *flg, char *s, fr *tb, va_list arg);
+int	print_with_flags(flags *fg, va_list arg, fr *tb);
 flags	*create_flags_struct();
 dot	*create_precision();
 #endif

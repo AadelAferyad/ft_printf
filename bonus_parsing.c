@@ -54,7 +54,7 @@ int	set_width(char *s, flags *fg)
 	fg->width = ft_atoi(s);
 	while (s[i] >= '0' && s[i] <= '9')
 		i++;
-	return (i);
+	return (i - (i > 0));
 }
 
 void	set_precision(char *s, flags *fg)
@@ -65,7 +65,7 @@ void	set_precision(char *s, flags *fg)
 	fg->perc = create_precision();
 	if (!fg->perc)
 		return ;
-	if (s[i] && !ft_strchr("csdiupxX%", s[i]))
+	if (s[i] && !ft_strchr(FORMAT, s[i]))
 		fg->perc->length = ft_atoi(&s[i]);
 	while (s[i] >= '0' && s[i] <= '9')	
 		i++;
@@ -79,14 +79,14 @@ flags	*flag_parser(char *s, char *flg, flags *fg)
 
 	i = 0;
 	is_flaged = 0;
-	while (s[i] && !ft_strchr("csdiupxX%", s[i]))
+	while (s[i] && !ft_strchr(FORMAT, s[i]))
 	{
 		schr = ft_strchr(flg, s[i]);
 		if (schr && !is_flaged)
 			is_flaged = set_flag_to_struct(s[i], fg);
 		else if (schr)
 			adjust_flag_bool(s[i], fg);
-		if (s[i] >= '1' && s[i] <= '0')
+		if (s[i] >= '1' && s[i] <= '9')
 			i += set_width(&s[i], fg);
 		if (s[i] == '.')
 			set_precision(&s[i], fg);
@@ -94,6 +94,7 @@ flags	*flag_parser(char *s, char *flg, flags *fg)
 	}
 	if (s[i])
 		fg->sp_format = s[i];
+	fg->index = i;
 	return (fg);
 }
 
@@ -152,23 +153,28 @@ void	validate_flags_with_spe(flags *fg)
 		validate_flags_with_sp(fg, 0, 1, 1, 1, 1);
 }
 
-flags	*check_flag(char *flg, char *s, fr *tb, va_list arg)
+int	check_flag(char *flg, char *s, fr *tb, va_list arg)
 {
 	flags	*fg;
+	int	count;
 
 	fg = create_flags_struct();
 	if (!fg)
-		return (NULL);
+		return (0);
 	if (ft_strchr(flg, *s))
 	{
 		flag_parser(s, flg, fg);
-		if (!ft_strchr("csdiupxX%", fg->sp_format))
+		if (!ft_strchr(FORMAT, fg->sp_format))
 		{
 			garbage_collector(fg);
-			return (NULL);
+			return (0);
 		}
 		validate_flags_with_spe(fg);
 		validate_percision(fg);
+		count = print_with_flags(fg, arg, tb);
+		tb[0].index = fg->index;
+		garbage_collector(fg);
+		return (count);
 	}
-	return (fg);
+	return (0);
 }
