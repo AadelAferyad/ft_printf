@@ -22,12 +22,20 @@ void	count_len_d(va_list arg, flags *fg)
 	va_copy(temp, arg);
 	n = va_arg(temp, int);
 	count = ft_count_len(n);
+	if (n < 0 && !fg->zero)
+		count++;
 	if (fg->perc)
 	{
 		tmp = fg->perc->length - count;
 		if (fg->perc->length - count > 0)
 			count += tmp;
 		fg->perc->length = tmp;
+		if (fg->zero)
+		{
+			fg->zero = OFF;
+			fg->space = ON;
+		}
+
 	}
 	fg->len_data = count;
 }
