@@ -1,50 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_characters.c                                 :+:      :+:    :+:   */
+/*   bonus_percision.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/14 02:14:50 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/20 22:19:25 by aaferyad         ###   ########.fr       */
+/*   Created: 2024/11/20 21:39:08 by aaferyad          #+#    #+#             */
+/*   Updated: 2024/11/20 23:08:10 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "bonus_printf.h"
 
-int	print_char(va_list arg)
+int	print_string_with_percision(t_flags *fg, va_list arg)
 {
-	char	c;
-
-	c = va_arg(arg, int);
-	return (ft_putchar(c));
-}
-
-int	print_string(va_list arg)
-{
-	char	*s;
-
-	s = va_arg(arg, char *);
-	if (!s)
-		return (ft_puts("(null)"));
-	return (ft_puts(s));
-}
-
-int	print_percentage(va_list arg)
-{
-	(void) arg;
-	return (ft_putchar('%'));
-}
-
-int	print_flags(int n, char c)
-{
-	int	i;
+	int		i;
+	char	*str;
 
 	i = 0;
-	while (i < n)
+	str = va_arg(arg, char *);
+	if (!str)
 	{
-		ft_putchar(c);
+		if (fg->perc->length > 5)
+			i = ft_puts("(null)");
+		return (i);
+	}
+	while (str[i] && i < fg->perc->length)
+	{
+		ft_putchar(str[i]);
 		i++;
 	}
 	return (i);
+}
+
+void	print_percision(t_flags *fg)
+{
+	char	c;
+
+	c = fg->sp_format;
+	if (c == 'd' || c == 'i' || c == 'u')
+		fg->zero = ON;
 }

@@ -6,13 +6,13 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 15:45:38 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/17 17:24:44 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:11:27 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bonus_printf.h"
 
-int	gen_index_key(char c, fr *frm)
+int	gen_index_key(char c, t_fr *frm)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	gen_index_key(char c, fr *frm)
 	return (-1);
 }
 
-int	check_format(char *frmt, char c, fr *tb, va_list arg)
+int	check_format(char *frmt, char c, t_fr *tb, va_list arg)
 {
 	int	count;
 	int	index;
@@ -42,7 +42,7 @@ int	check_format(char *frmt, char c, fr *tb, va_list arg)
 	return (count);
 }
 
-int	checker(const char *s, va_list args, fr *tb)
+int	checker(const char *s, va_list args, t_fr *tb)
 {
 	int	i;
 	int	count;
@@ -51,10 +51,10 @@ int	checker(const char *s, va_list args, fr *tb)
 	count = 0;
 	while (s[i])
 	{
-		if (s[i] == '%' && s[++i] )
+		if (s[i] == '%' && s[++i])
 		{
 			count += check_format(FORMAT, s[i], tb, args);
-			count += check_flag(FLAGS, (char *) &s[i], tb, args);
+			count += check_flag((char *) &s[i], tb, args);
 			i += tb->index;
 		}
 		else if (s[i])
@@ -68,9 +68,9 @@ int	checker(const char *s, va_list args, fr *tb)
 
 int	ft_printf(const char *s, ...)
 {
-	int		i;
 	va_list	arg;
-	fr	*frm;
+	t_fr	*frm;
+	int		i;
 
 	i = 0;
 	if (!s)

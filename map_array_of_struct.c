@@ -6,13 +6,13 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:49:17 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/17 15:06:53 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:57:23 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	fill_map(fr *frm)
+void	fill_map(t_fr *frm)
 {
 	if (!frm)
 		return ;
@@ -38,11 +38,11 @@ void	fill_map(fr *frm)
 	frm[9].sep = 0;
 }
 
-fr	*create_array(size_t size)
+t_fr	*create_array(size_t size)
 {
-	fr	*ptr;
+	t_fr	*ptr;
 
-	ptr = ft_calloc(size, sizeof(fr));
+	ptr = ft_calloc(size, sizeof(t_fr));
 	if (!ptr)
 		return (NULL);
 	return (ptr);

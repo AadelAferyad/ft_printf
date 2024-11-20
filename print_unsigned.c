@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:47:37 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/17 13:47:40 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:23:18 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int	ft_count_div(int len)
 	return (div);
 }
 
-int	ft_writer(unsigned nb, int div)
+int	ft_writer(unsigned int nb, int div)
 {
-	int	len;
+	int		len;
 	char	n;
 
 	len = 0;
@@ -63,6 +63,5 @@ int	ft_putnbr_unsigned(unsigned int n)
 
 	len = ft_count_len(n);
 	div = ft_count_div(len);
-	return (ft_writer(n, div));	
+	return (ft_writer(n, div));
 }
-

@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:44:06 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/17 13:44:32 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:16:57 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	print_address_helper(unsigned long long hex, int flag)
 {
-	int	count;
-	int	i;
+	int		count;
+	int		i;
 	char	*p;
 
 	p = malloc(sizeof(char) * 30);
@@ -35,7 +35,7 @@ int	print_address_helper(unsigned long long hex, int flag)
 	if (!flag)
 		count = ft_puts(p);
 	else
-		count = ft_strlen(p); 
+		count = ft_strlen(p);
 	free(p);
 	return (count);
 }

@@ -6,106 +6,20 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/17 13:57:02 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/17 17:24:38 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/20 23:07:58 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bonus_printf.h"
 
-/*
- * "%-10s", "hey"
- * "%-10#d", 22;
- * "%10c", 'c'
- * */
-int	set_flag_to_struct(char c, flags *fg)
-{
-	if (c == '-')
-		fg->minus = ON;
-	else if (c == '0')
-		fg->zero = ON;
-	else if (c == '#')
-		fg->hashtag = ON;
-	else if (c == ' ')
-		fg->space = ON;
-	else if (c == '+')
-		fg->plus = ON;
-	else
-		return (0);
-	return (1);
-}
-
-void	adjust_flag_bool(char c, flags *fg)
-{
-	if (c == '-')
-	{
-		fg->minus = ON;
-		if (fg->zero)
-			fg->zero = OFF;
-	}
-	else if (c == '0' && !fg->minus)
-		fg->zero = ON;
-}
-
-int	set_width(char *s, flags *fg)
-{
-	int	i;
-
-	i = 0;
-	fg->width = ft_atoi(s);
-	while (s[i] >= '0' && s[i] <= '9')
-		i++;
-	if (!fg->minus && !fg->zero && !fg->space)
-		fg->space = ON;
-	return (i - (i > 0));
-}
-
-void	set_precision(char *s, flags *fg)
-{
-	int	i;
-
-	i = 1;
-	fg->perc = create_precision();
-	if (!fg->perc)
-		return ;
-	if (s[i] && !ft_strchr(FORMAT, s[i]))
-		fg->perc->length = ft_atoi(&s[i]);
-}
-
-flags	*flag_parser(char *s, char *flg, flags *fg)
-{
-	int	i;
-	int	is_flaged;
-	char	*schr;
-
-	i = 0;
-	is_flaged = 0;
-	while (s[i] && !ft_strchr(FORMAT, s[i]))
-	{
-		schr = ft_strchr(flg, s[i]);
-		if (schr && !is_flaged)
-			is_flaged = set_flag_to_struct(s[i], fg);
-		else if (schr)
-			adjust_flag_bool(s[i], fg);
-		if ((s[i] >= '1' && s[i] <= '9') && !fg->perc)
-			i += set_width(&s[i], fg);
-		if (s[i] == '.')
-			set_precision(&s[i], fg);
-		i++;
-	}
-	if (s[i])
-		fg->sp_format = s[i];
-	fg->index = i;
-	return (fg);
-}
-
-void	garbage_collector(flags *fg)
+void	garbage_collector(t_flags *fg)
 {
 	if (fg->perc)
 		free(fg->perc);
 	free(fg);
 }
 
-int	validate_percision(flags *fg)
+int	validate_percision(t_flags *fg)
 {
 	char	c;
 
@@ -119,54 +33,61 @@ int	validate_percision(flags *fg)
 	return (0);
 }
 
-void	validate_flags_with_sp(flags *fg, int m, int z, int h, int space, int p)
+void	validate_flags_with_sp(t_flags *fg, char *s)
 {
-	if (m && fg->minus)
-		fg->minus = OFF;
-	if (z && fg->zero)
-		fg->zero = OFF;
-	if (h && fg->hashtag)
-		fg->hashtag = OFF;
-	if (space && fg->space)
-		fg->space = OFF;
-	if (p && fg->plus)
-		fg->plus = OFF;
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == 'm' && fg->minus)
+			fg->minus = OFF;
+		else if (s[i] == 'z' && fg->zero)
+			fg->zero = OFF;
+		else if (s[i] == 'h' && fg->hashtag)
+			fg->hashtag = OFF;
+		else if (s[i] == ' ' && fg->space)
+			fg->space = OFF;
+		else if (s[i] == 'p' && fg->plus)
+			fg->plus = OFF;
+		i++;
+	}
 }
 
-void	validate_flags_with_spe(flags *fg)
+void	validate_flags_with_spe(t_flags *fg)
 {
 	char	c;
 
 	c = fg->sp_format;
 	if (c == 's')
-		validate_flags_with_sp(fg, 0, 1, 1, 0, 1);
+		validate_flags_with_sp(fg, "zhp");
 	else if (c == 'c')
-		validate_flags_with_sp(fg, 0, 1, 1, 0, 1);
+		validate_flags_with_sp(fg, "zhp");
 	else if (c == 'd')
-		validate_flags_with_sp(fg, 0, 0, 1, 0, 0);
+		validate_flags_with_sp(fg, "h");
 	else if (c == 'i')
-		validate_flags_with_sp(fg, 0, 0, 1, 0, 0);
+		validate_flags_with_sp(fg, "h");
 	else if (c == 'u')
-		validate_flags_with_sp(fg, 0, 0, 1, 0, 1);
+		validate_flags_with_sp(fg, "hp");
 	else if (c == 'x')
-		validate_flags_with_sp(fg, 0, 0, 0, 0, 1);
+		validate_flags_with_sp(fg, "p");
 	else if (c == 'X')
-		validate_flags_with_sp(fg, 0, 0, 0, 0, 1);
+		validate_flags_with_sp(fg, "p");
 	else if (c == 'p')
-		validate_flags_with_sp(fg, 0, 1, 1, 0, 1);
+		validate_flags_with_sp(fg, "zhp");
 }
 
-int	check_flag(char *flg, char *s, fr *tb, va_list arg)
+int	check_flag(char *s, t_fr *tb, va_list arg)
 {
-	flags	*fg;
-	int	count;
+	t_flags	*fg;
+	int		count;
 
 	fg = create_flags_struct();
 	if (!fg)
 		return (0);
-	if (ft_strchr(flg, *s) || (*s >= '0' && *s <= '9'))
+	if (ft_strchr(FLAGS, *s) || (*s >= '0' && *s <= '9'))
 	{
-		flag_parser(s, flg, fg);
+		flag_parser(s, FLAGS, fg);
 		if (!ft_strchr(FORMAT, fg->sp_format))
 		{
 			garbage_collector(fg);

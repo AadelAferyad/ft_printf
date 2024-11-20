@@ -6,7 +6,7 @@
 /*   By: aaferyad <aaferyad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 15:42:30 by aaferyad          #+#    #+#             */
-/*   Updated: 2024/11/15 15:53:07 by aaferyad         ###   ########.fr       */
+/*   Updated: 2024/11/20 22:20:07 by aaferyad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	print_hex(int hex, int flag, char c)
 {
-	int	count;
-	int	i;
+	int		count;
+	int		i;
 	char	*p;
 
 	p = malloc(sizeof(char) * 30);
@@ -35,7 +35,7 @@ int	print_hex(int hex, int flag, char c)
 	if (!flag)
 		count = ft_puts(p);
 	else
-		count = ft_strlen(p); 
+		count = ft_strlen(p);
 	free(p);
 	return (count);
 }

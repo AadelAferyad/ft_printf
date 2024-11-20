@@ -3,7 +3,10 @@ COMPILER := cc
 FLAGS := -Wextra -Werror -Wall -c
 REMOVE := rm -f
 
-src := printf.c print_unsigned.c print_int.c print_hex.c print_characters.c print_address.c map_array_of_struct.c bonus_parsing.c bonus_print.c bonus_functions.c
+src := printf.c print_unsigned.c print_int.c print_hex.c print_characters.c print_address.c map_array_of_struct.c\
+	bonus_parsing.c bonus_print.c bonus_functions.c bonus_parser_functions.c\
+	bonus_percision.c bonus_print_count_len.c bonus_print_functions.c
+
 obj = $(src:%.c=%.o) 
 
 all: $(NAME)
