@@ -16,30 +16,62 @@ void	count_len_d(va_list arg, flags *fg)
 {
 	va_list	temp;
 	int	n;
+	int	count;
+	int	tmp;
 
 	va_copy(temp, arg);
 	n = va_arg(temp, int);
-	fg->len_data = ft_count_len(n);
+	count = ft_count_len(n);
+	if (fg->perc)
+	{
+		tmp = fg->perc->length - count;
+		if (fg->perc->length - count > 0)
+			count += tmp;
+		fg->perc->length = tmp;
+	}
+	fg->len_data = count;
 }
 
 void	count_len_u(va_list arg, flags *fg)
 {
 	va_list	temp;
 	int	n;
+	int	count;
+	int	tmp;
 
 	va_copy(temp, arg);
 	n = va_arg(temp, unsigned int);
-	fg->len_data = ft_count_len(n);
+	count = ft_count_len(n);
+	if (fg->perc)
+	{
+		tmp = fg->perc->length - count;
+		if (fg->perc->length - count > 0)
+			count += tmp;
+		fg->perc->length = tmp;
+	}
+	fg->len_data = count;
 }
 
 void	count_len_s(va_list arg, flags *fg)
 {
 	va_list	temp;
 	char	*str;
+	int	len;
 
 	va_copy(temp, arg);
 	str = va_arg(temp, char *);
-	fg->len_data = ft_strlen(str);
+	if (!str)
+	{
+		len = ft_strlen("(NULL)");
+		if (fg->perc->length < 6)
+			len = 0;
+		fg->len_data = len;
+		return ;
+	}
+	len = ft_strlen(str);
+	if (fg->perc && len > fg->perc->length)
+		len = fg->perc->length;
+	fg->len_data = len;
 }
 
 void	count_len_p(va_list arg, flags *fg)
@@ -49,7 +81,7 @@ void	count_len_p(va_list arg, flags *fg)
 
 	va_copy(temp, arg);
 	ptr = (unsigned long long) va_arg(temp, void *);
-	fg->len_data = print_address_helper(ptr, ON);
+	fg->len_data = print_address_helper(ptr, ON) + 2;
 }
 
 void	count_len_x(va_list arg, flags *fg)
@@ -165,22 +197,74 @@ int	print_nbr_flag_plus(va_list arg)
 	return (count);
 }
 
+void	print_percision(flags *fg)
+{
+	char	c;
+
+	c = fg->sp_format;
+	if (c == 'd' || c == 'i' || c == 'u')
+		fg->zero = ON;
+
+}
+
+int	print_flag_zero(flags *fg)
+{
+	int	size;
+	int	i;
+
+	i = 0;
+	size = fg->width - fg->len_data;
+	if (fg->perc)
+		size = fg->perc->length;
+	while (i < size)
+	{
+		ft_putchar('0');
+		i++;
+	}
+	fg->len_data += i;
+	return (i);
+
+}
+int	print_string_with_percision(flags *fg, va_list arg)
+{
+	int	i;
+	char	*str;
+
+	i = 0;
+	str = va_arg(arg, char *);
+	if (!str)
+	{
+		if (fg->perc->length > 5)
+			i = ft_puts("(null)");
+		return (i);
+	}
+	while (str[i] && i < fg->perc->length)
+	{
+		ft_putchar(str[i]);
+		i++;
+	}
+	return (i);
+}
+
 void	printer(flags *fg, va_list arg, fr *tb)
 {
 	int	count;
-	/**/
-	/*printf("hna minus %d, plus %d, space %d, hashtag %d, zero %d, format %c, width : %d\n", fg->minus, fg->plus, fg->space, fg->hashtag, fg->zero, fg->sp_format, fg->width);*/
+
 	count = 0;
 	if (fg->space)
 		count += print_flag_char(fg, ' ');
+	if (fg->perc)
+		print_percision(fg);
 	if (fg->hashtag)
 		count += print_flag_hashtag(fg);
 	if (fg->plus)
 		count += print_flag_plus(fg, arg);
 	if (fg->zero)
-		count += print_flag_char(fg, '0');
+		count += print_flag_zero(fg);
 	if (fg->plus)
 		count += print_nbr_flag_plus(arg);
+	else if (fg->perc && fg->sp_format == 's')
+		count += print_string_with_percision(fg, arg);
 	else
 		count += check_format(FORMAT, fg->sp_format, tb, arg);
 	if (fg->minus)

@@ -107,7 +107,10 @@ void	garbage_collector(flags *fg)
 
 int	validate_percision(flags *fg)
 {
-	if (fg->sp_format != 's' && fg->sp_format != 'd')
+	char	c;
+
+	c = fg->sp_format;
+	if (c != 's' && c != 'd' && c != 'i' && c != 'u')
 	{
 		free(fg->perc);
 		fg->perc = NULL;
@@ -144,7 +147,7 @@ void	validate_flags_with_spe(flags *fg)
 	else if (c == 'i')
 		validate_flags_with_sp(fg, 0, 0, 1, 0, 0);
 	else if (c == 'u')
-		validate_flags_with_sp(fg, 0, 0, 1, 1, 1);
+		validate_flags_with_sp(fg, 0, 0, 1, 0, 1);
 	else if (c == 'x')
 		validate_flags_with_sp(fg, 0, 0, 0, 0, 1);
 	else if (c == 'X')
@@ -176,5 +179,6 @@ int	check_flag(char *flg, char *s, fr *tb, va_list arg)
 		garbage_collector(fg);
 		return (count);
 	}
+	garbage_collector(fg);
 	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int	print_address_helper(unsigned long hex, int flag)
+int	print_address_helper(unsigned long long hex, int flag)
 {
 	int	count;
 	int	i;
@@ -42,10 +42,10 @@ int	print_address_helper(unsigned long hex, int flag)
 
 int	print_address(va_list arg)
 {
-	unsigned long	a;
+	unsigned long long	a;
 
-	a = (unsigned long) va_arg(arg, void *);
+	a = (unsigned long long) va_arg(arg, void *);
 	if (!a)
 		return (ft_puts("(nil)"));
-	return (ft_puts("0x") + print_address_helper((unsigned long) a, 0));
+	return (ft_puts("0x") + print_address_helper(a, 0));
 }

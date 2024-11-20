@@ -43,7 +43,7 @@ int	print_hex_upper(va_list arg);
 int	print_hex_lower(va_list arg);
 int	print_percentage(va_list arg);
 int	print_address(va_list arg);
-int	print_address_helper(unsigned long hex, int flag);
+int	print_address_helper(unsigned long long hex, int flag);
 
 int	print_flags(int n, char c);
 int	ft_count_len(long nb);

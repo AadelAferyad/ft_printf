@@ -8,14 +8,14 @@ int	main(void)
 	int	i;
 
 
-	i = printf("%.5d\n", 12);
+	i = printf("%.15s\n", NULL);
 	ft_printf("%d\n", i);
-	i = ft_printf("%.5d\n", 12);
+	i = ft_printf("%.15s\n", NULL);
 	ft_printf("%d\n", i);
 
-	i = printf("%10.5d\n", 12);
+	i = printf("|%10.6s|\n", NULL);
 	ft_printf("%d\n", i);
-	i = ft_printf("%10.5d\n", 12);
+	i = ft_printf("|%10.6s|\n", NULL);
 	ft_printf("%d\n", i);
 	return (0);
 }
