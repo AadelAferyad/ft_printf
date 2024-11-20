@@ -69,8 +69,6 @@ void	set_precision(char *s, flags *fg)
 		return ;
 	if (s[i] && !ft_strchr(FORMAT, s[i]))
 		fg->perc->length = ft_atoi(&s[i]);
-	while (s[i] >= '0' && s[i] <= '9')	
-		i++;
 }
 
 flags	*flag_parser(char *s, char *flg, flags *fg)
@@ -88,7 +86,7 @@ flags	*flag_parser(char *s, char *flg, flags *fg)
 			is_flaged = set_flag_to_struct(s[i], fg);
 		else if (schr)
 			adjust_flag_bool(s[i], fg);
-		if (s[i] >= '1' && s[i] <= '9')
+		if ((s[i] >= '1' && s[i] <= '9') && !fg->perc)
 			i += set_width(&s[i], fg);
 		if (s[i] == '.')
 			set_precision(&s[i], fg);
@@ -109,7 +107,7 @@ void	garbage_collector(flags *fg)
 
 int	validate_percision(flags *fg)
 {
-	if (fg->sp_format != 's')
+	if (fg->sp_format != 's' && fg->sp_format != 'd')
 	{
 		free(fg->perc);
 		fg->perc = NULL;
@@ -138,9 +136,9 @@ void	validate_flags_with_spe(flags *fg)
 
 	c = fg->sp_format;
 	if (c == 's')
-		validate_flags_with_sp(fg, 0, 0, 1, 0, 0);
+		validate_flags_with_sp(fg, 0, 1, 1, 0, 1);
 	else if (c == 'c')
-		validate_flags_with_sp(fg, 0, 1, 1, 1, 1);
+		validate_flags_with_sp(fg, 0, 1, 1, 0, 1);
 	else if (c == 'd')
 		validate_flags_with_sp(fg, 0, 0, 1, 0, 0);
 	else if (c == 'i')
@@ -152,7 +150,7 @@ void	validate_flags_with_spe(flags *fg)
 	else if (c == 'X')
 		validate_flags_with_sp(fg, 0, 0, 0, 0, 1);
 	else if (c == 'p')
-		validate_flags_with_sp(fg, 0, 1, 1, 1, 1);
+		validate_flags_with_sp(fg, 0, 1, 1, 0, 1);
 }
 
 int	check_flag(char *flg, char *s, fr *tb, va_list arg)

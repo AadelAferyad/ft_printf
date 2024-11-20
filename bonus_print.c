@@ -81,9 +81,7 @@ void	count_len(va_list arg, flags *fg)
 		count_len_x(arg, fg);
 	if (fg->hashtag)
 		fg->len_data += 2;
-	if (fg->zero)
-		fg->len_data += 1;
-	if (fg->plus)
+	if (fg->plus && !fg->zero)
 		fg->len_data += 1;
 }
 
@@ -96,6 +94,7 @@ int	print_flag_char(flags *fg, char c)
 	if ((fg->minus || fg->zero) && fg->space)
 	{
 		fg->len_data++;
+		fg->space = OFF;
 		return (ft_putchar(' '));
 	}
 	size = fg->width - fg->len_data;
@@ -181,9 +180,7 @@ void	printer(flags *fg, va_list arg, fr *tb)
 	if (fg->zero)
 		count += print_flag_char(fg, '0');
 	if (fg->plus)
-	{
 		count += print_nbr_flag_plus(arg);
-	}
 	else
 		count += check_format(FORMAT, fg->sp_format, tb, arg);
 	if (fg->minus)
