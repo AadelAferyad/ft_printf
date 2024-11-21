@@ -12,7 +12,18 @@
 
 #include "ft_printf.h"
 
-int	print_hex(int hex, int flag, char c)
+int	count_len_of_hex(char *p, int flag)
+{
+	int	count;
+
+	if (!flag)
+		count = ft_puts(p);
+	else
+		count = ft_strlen(p);
+	return (count);
+}
+
+int	print_hex(unsigned int hex, int flag, char c)
 {
 	int		count;
 	int		i;
@@ -22,6 +33,8 @@ int	print_hex(int hex, int flag, char c)
 	if (!p)
 		return (-1);
 	i = 0;
+	if (hex == 0)
+		p[i++] = '0';
 	while (hex > 0)
 	{
 		if (hex % 16 < 10)
@@ -32,26 +45,23 @@ int	print_hex(int hex, int flag, char c)
 	}
 	p[i] = '\0';
 	ft_reverse(p);
-	if (!flag)
-		count = ft_puts(p);
-	else
-		count = ft_strlen(p);
+	count = count_len_of_hex(p, flag);
 	free(p);
 	return (count);
 }
 
 int	print_hex_lower(va_list arg)
 {
-	int	hex;
+	unsigned int	hex;
 
-	hex = va_arg(arg, int);
+	hex = va_arg(arg, unsigned int);
 	return (print_hex(hex, 0, 'a'));
 }
 
 int	print_hex_upper(va_list arg)
 {
-	int	hex;
+	unsigned int	hex;
 
-	hex = va_arg(arg, int);
+	hex = va_arg(arg, unsigned int);
 	return (print_hex(hex, 0, 'A'));
 }

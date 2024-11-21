@@ -38,7 +38,7 @@ int		print_integer(va_list arg);
 void	fill_map(t_fr *frm);
 int		print_unsigned(va_list arg);
 int		ft_putnbr_unsigned(unsigned int b);
-int		print_hex(int hex, int flag, char c);
+int		print_hex(unsigned int hex, int flag, char c);
 int		print_hex_upper(va_list arg);
 int		print_hex_lower(va_list arg);
 int		print_percentage(va_list arg);

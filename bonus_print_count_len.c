@@ -93,10 +93,10 @@ void	count_len_p(va_list arg, t_flags *fg)
 
 void	count_len_x(va_list arg, t_flags *fg)
 {
-	va_list	temp;
-	int		hex;
+	va_list			temp;
+	unsigned int	hex;
 
 	va_copy(temp, arg);
-	hex = va_arg(temp, int);
+	hex = va_arg(temp, unsigned int);
 	fg->len_data = print_hex(hex, ON, 'a');
 }
