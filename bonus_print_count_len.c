@@ -22,7 +22,7 @@ void	count_len_d(va_list arg, t_flags *fg)
 	va_copy(temp, arg);
 	n = va_arg(temp, int);
 	count = ft_count_len(n);
-	if (n < 0 && !fg->zero)
+	if (n < 0)
 		count++;
 	if (fg->perc)
 	{
@@ -42,7 +42,7 @@ void	count_len_d(va_list arg, t_flags *fg)
 void	count_len_u(va_list arg, t_flags *fg)
 {
 	va_list	temp;
-	int		n;
+	unsigned int	n;
 	int		count;
 	int		tmp;
 

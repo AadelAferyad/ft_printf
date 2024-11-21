@@ -35,12 +35,18 @@ void	count_len(va_list arg, t_flags *fg)
 		fg->len_data += 1;
 }
 
-int	print_flag_zero(t_flags *fg)
+int	print_flag_zero(t_flags *fg, va_list arg)
 {
+	va_list	tmp;
 	int	size;
 	int	i;
+	int	n;
 
 	i = 0;
+	va_copy(tmp, arg);
+	n = va_arg(tmp, int);
+	if (n < 0)
+		ft_putchar('-');
 	size = fg->width - fg->len_data;
 	if (fg->perc)
 		size = fg->perc->length;
@@ -49,8 +55,29 @@ int	print_flag_zero(t_flags *fg)
 		ft_putchar('0');
 		i++;
 	}
-	fg->len_data += i;
-	return (i);
+	fg->len_data += i + (n < 0);
+	return (i + (n < 0));
+}
+
+int	print_nbr_with_zero(va_list arg)
+{
+	int	n;
+	int	count;
+
+	n = va_arg(arg, int);
+	count = 0;
+	if (n < 0)
+	{
+		if (n == -2147483648)
+		{
+			count += ft_putchar('2');
+			n = 147483648;
+		}
+		else
+			n = -n;
+	}
+	count += ft_putnbr(n);
+	return (count);
 }
 
 void	printer(t_flags *fg, va_list arg, t_fr *tb)
@@ -67,11 +94,13 @@ void	printer(t_flags *fg, va_list arg, t_fr *tb)
 	if (fg->plus)
 		count += print_flag_plus(fg, arg);
 	if (fg->zero)
-		count += print_flag_zero(fg);
+		count += print_flag_zero(fg, arg);
 	if (fg->plus)
 		count += print_nbr_flag_plus(arg);
 	else if (fg->perc && fg->sp_format == 's')
 		count += print_string_with_percision(fg, arg);
+	else if (fg->zero)
+		count += print_nbr_with_zero(arg);
 	else
 		count += check_format(FORMAT, fg->sp_format, tb, arg);
 	if (fg->minus)
