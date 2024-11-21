@@ -18,7 +18,7 @@ int	print_flag_char(t_flags *fg, char c)
 	int	size;
 
 	i = 0;
-	if ((fg->minus || fg->zero) && fg->space)
+	if (((fg->minus || fg->zero) && fg->space) || (fg->space && !fg->width))
 	{
 		fg->len_data++;
 		fg->space = OFF;
@@ -41,7 +41,7 @@ int	print_flag_hashtag(t_flags *fg, va_list arg)
 	unsigned int	hex;
 
 	c = fg->sp_format;
-	if (c != 'x' || c != 'X')
+	if (c != 'x' && c != 'X')
 		return (0);
 	va_copy(tmp, arg);
 	hex = va_arg(tmp, unsigned int);
@@ -49,7 +49,7 @@ int	print_flag_hashtag(t_flags *fg, va_list arg)
 		return (0);
 	if (c == 'x')
 		return (ft_puts("0x"));
-	return (ft_puts("0x"));
+	return (ft_puts("0X"));
 }
 
 int	print_flag_plus(t_flags *fg, va_list arg)
