@@ -38,15 +38,19 @@ void	count_len(va_list arg, t_flags *fg)
 int	print_flag_zero(t_flags *fg, va_list arg)
 {
 	va_list	tmp;
-	int	size;
-	int	i;
-	int	n;
+	int		size;
+	int		i;
+	int		n;
 
+	n = 1;
+	if (fg->sp_format == 'd' || fg->sp_format == 'i')
+	{
+		va_copy(tmp, arg);
+		n = va_arg(tmp, int);
+		if (n < 0)
+			ft_putchar('-');
+	}
 	i = 0;
-	va_copy(tmp, arg);
-	n = va_arg(tmp, int);
-	if (n < 0)
-		ft_putchar('-');
 	size = fg->width - fg->len_data;
 	if (fg->perc)
 		size = fg->perc->length;
@@ -90,7 +94,7 @@ void	printer(t_flags *fg, va_list arg, t_fr *tb)
 	if (fg->perc)
 		print_percision(fg);
 	if (fg->hashtag)
-		count += print_flag_hashtag(fg);
+		count += print_flag_hashtag(fg, arg);
 	if (fg->plus)
 		count += print_flag_plus(fg, arg);
 	if (fg->zero)
@@ -99,7 +103,7 @@ void	printer(t_flags *fg, va_list arg, t_fr *tb)
 		count += print_nbr_flag_plus(arg);
 	else if (fg->perc && fg->sp_format == 's')
 		count += print_string_with_percision(fg, arg);
-	else if (fg->zero)
+	else if (fg->zero && (fg->sp_format == 'd' || fg->sp_format == 'i'))
 		count += print_nbr_with_zero(arg);
 	else
 		count += check_format(FORMAT, fg->sp_format, tb, arg);

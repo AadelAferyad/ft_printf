@@ -34,13 +34,22 @@ int	print_flag_char(t_flags *fg, char c)
 	return (i);
 }
 
-int	print_flag_hashtag(t_flags *fg)
+int	print_flag_hashtag(t_flags *fg, va_list arg)
 {
-	if (fg->sp_format == 'x')
+	char			c;
+	va_list			tmp;
+	unsigned int	hex;
+
+	c = fg->sp_format;
+	if (c != 'x' || c != 'X')
+		return (0);
+	va_copy(tmp, arg);
+	hex = va_arg(tmp, unsigned int);
+	if (!hex)
+		return (0);
+	if (c == 'x')
 		return (ft_puts("0x"));
-	if (fg->sp_format == 'X')
-		return (ft_puts("0x"));
-	return (0);
+	return (ft_puts("0x"));
 }
 
 int	print_flag_plus(t_flags *fg, va_list arg)

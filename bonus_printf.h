@@ -48,7 +48,7 @@ int		set_flag_to_struct(char c, t_flags *fg);
 t_flags	*flag_parser(char *s, char *flg, t_flags *fg);
 
 int		print_flag_char(t_flags *fg, char c);
-int		print_flag_hashtag(t_flags *fg);
+int		print_flag_hashtag(t_flags *fg, va_list arg);
 int		print_flag_plus(t_flags *fg, va_list arg);
 int		print_flag_minus(t_flags *fg);
 int		print_nbr_flag_plus(va_list arg);

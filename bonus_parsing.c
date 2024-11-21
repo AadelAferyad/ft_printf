@@ -24,7 +24,7 @@ int	validate_percision(t_flags *fg)
 	char	c;
 
 	c = fg->sp_format;
-	if (c != 's' && c != 'd' && c != 'i' && c != 'u')
+	if (c != 's' && c != 'd' && c != 'i' && c != 'u' && c != 'x' && c != 'X')
 	{
 		free(fg->perc);
 		fg->perc = NULL;

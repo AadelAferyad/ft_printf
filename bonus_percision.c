@@ -38,6 +38,8 @@ void	print_percision(t_flags *fg)
 	char	c;
 
 	c = fg->sp_format;
-	if (c == 'd' || c == 'i' || c == 'u')
+	if (c == 'd' || c == 'i' || c == 'u' || c == 'x' || c == 'X')
 		fg->zero = ON;
+	if (c == 'x' || c == 'X')
+		fg->perc->length -= fg->len_data;
 }
