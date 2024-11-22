@@ -8,9 +8,9 @@ int	main(void)
 	int	i;
 
 
-	i = printf("%10d\n", -123);
+	i = printf(NULL);
 	printf("%d\n", i);
-	i = ft_printf("%10d\n", -123);
+	i = ft_printf(NULL);
 	printf("%d\n", i);
 	return (0);
 }

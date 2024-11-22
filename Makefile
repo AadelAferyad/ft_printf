@@ -26,14 +26,14 @@ all: $(NAME)
 $(NAME): $(obj) $(obj_bonus) $(obj_libft)
 	ar rsc $(NAME) $(obj) $(obj_bonus) $(obj_libft)
 
-bonus: $(obj) $(obj_bonus) $(obj_libft)
+bonus: $(obj) $(obj_bonus) $(obj_libft) $(obj_libft_bonus)
 	ar rsc $(NAME) $(obj) $(obj_bonus) $(obj_libft)
 
 %.o: %.c
 	$(COMPILER) $(FLAGS) $< -o $@
 
 clean:
-	$(REMOVE) $(obj) $(obj_bonus)
+	$(REMOVE) $(obj) $(obj_bonus) $(obj_libft) $(obj_libft_bonus)
 
 fclean: clean
 	$(REMOVE) $(NAME)

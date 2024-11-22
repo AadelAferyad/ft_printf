@@ -75,6 +75,8 @@ int	ft_printf(const char *s, ...)
 	i = 0;
 	if (!s)
 		return (0);
+	if (write(1, 0, 0) == -1)
+		return (-1);
 	frm = create_array(12);
 	if (!frm)
 		return (-1);
