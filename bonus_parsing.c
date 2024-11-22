@@ -54,26 +54,30 @@ void	validate_flags_with_sp(t_flags *fg, char *s)
 	}
 }
 
-void	validate_flags_with_spe(t_flags *fg)
+void	validate_flags_with_spe(t_flags *fg, va_list arg)
 {
-	char	c;
+	int		n;
+	va_list	tmp;
 
-	c = fg->sp_format;
-	if (c == 's')
+	va_copy(tmp, arg);
+	if (fg->sp_format == 's')
 		validate_flags_with_sp(fg, "zhp");
-	else if (c == 'c')
+	else if (fg->sp_format == 'c')
 		validate_flags_with_sp(fg, "zhp");
-	else if (c == 'd')
+	else if (fg->sp_format == 'd' || fg->sp_format == 'i')
+	{
+		n = va_arg(tmp, int);
+		if (n < 0)
+			fg->space = OFF;
 		validate_flags_with_sp(fg, "h");
-	else if (c == 'i')
-		validate_flags_with_sp(fg, "h");
-	else if (c == 'u')
+	}
+	else if (fg->sp_format == 'u')
 		validate_flags_with_sp(fg, "hp");
-	else if (c == 'x')
+	else if (fg->sp_format == 'x')
 		validate_flags_with_sp(fg, "p");
-	else if (c == 'X')
+	else if (fg->sp_format == 'X')
 		validate_flags_with_sp(fg, "p");
-	else if (c == 'p')
+	else if (fg->sp_format == 'p')
 		validate_flags_with_sp(fg, "zhp");
 }
 
@@ -93,7 +97,7 @@ int	check_flag(char *s, t_fr *tb, va_list arg)
 			garbage_collector(fg);
 			return (0);
 		}
-		validate_flags_with_spe(fg);
+		validate_flags_with_spe(fg, arg);
 		validate_percision(fg);
 		count = print_with_flags(fg, arg, tb);
 		tb[0].index = fg->index;

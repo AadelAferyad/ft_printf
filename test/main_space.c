@@ -12,9 +12,9 @@ int	main(void)
 	/*i = printf("|% x|", 0);*/
 	/*printf("\n%d\n", i);*/
 
-	i = ft_printf("|% +d|", -13);
+	i = ft_printf("|% i|", -13);
 	printf("\n%d\n", i);
-	i = printf("|% d|", -122);
+	i = printf("|% i|", -12);
 	printf("\n%d\n", i);
 
 	/*i = ft_printf("|% s|", "hello world");*/
