@@ -73,10 +73,10 @@ void	validate_flags_with_spe(t_flags *fg, va_list arg)
 	}
 	else if (fg->sp_format == 'u')
 		validate_flags_with_sp(fg, "hp");
-	else if (fg->sp_format == 'x')
+	else if (fg->sp_format == 'x' || fg->sp_format == 'X')
 		validate_flags_with_sp(fg, "p");
-	else if (fg->sp_format == 'X')
-		validate_flags_with_sp(fg, "p");
+	else if (fg->sp_format == '%')
+		validate_flags_with_sp(fg, "zhp m");
 	else if (fg->sp_format == 'p')
 		validate_flags_with_sp(fg, "zhp");
 }

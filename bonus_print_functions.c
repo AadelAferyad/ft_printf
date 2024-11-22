@@ -20,6 +20,8 @@ int	print_flag_char(t_flags *fg, char c)
 	i = 0;
 	if (((fg->minus || fg->zero) && fg->space) || (fg->space && !fg->width))
 	{
+		if (fg->sp_format != 'i' && fg->sp_format != 'd' && fg->sp_format != 'p')
+			return (0);
 		fg->len_data++;
 		fg->space = OFF;
 		return (ft_putchar(' '));
