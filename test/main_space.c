@@ -73,9 +73,9 @@ int	main(void)
 	i = printf("|% %|");
 	printf("\n%d\n", i);
 
-	i = ft_printf("|%.10%|");
+	i = ft_printf("|%.10d|hello", LONG_MAX);
 	printf("\n%d\n", i);
-	i = printf("|%.10%|");
+	i = printf("|%.10d|hello", LONG_MAX);
 	printf("\n%d\n", i);
 	return (0);
 }

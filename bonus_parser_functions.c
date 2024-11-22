@@ -37,16 +37,19 @@ int	set_width(char *s, t_flags *fg)
 	return (i - (i > 0));
 }
 
-void	set_precision(char *s, t_flags *fg)
+int	set_precision(char *s, t_flags *fg)
 {
 	int	i;
 
 	i = 1;
 	fg->perc = create_precision();
 	if (!fg->perc)
-		return ;
+		return (-1);
 	if (s[i] && !ft_strchr(FORMAT, s[i]))
 		fg->perc->length = ft_atoi(&s[i]);
+	while (s[i] >= '0' && s[i] <= '9')
+		i++;
+	return (i - (i - 1 >= 0));
 }
 
 t_flags	*flag_parser(char *s, char *flg, t_flags *fg)
@@ -64,10 +67,10 @@ t_flags	*flag_parser(char *s, char *flg, t_flags *fg)
 			is_flaged = set_flag_to_struct(s[i], fg);
 		else if (schr)
 			adjust_flag_bool(s[i], fg);
+		if (s[i] == '.')
+			i += set_precision(&s[i], fg);
 		if ((s[i] >= '1' && s[i] <= '9') && !fg->perc)
 			i += set_width(&s[i], fg);
-		if (s[i] == '.')
-			set_precision(&s[i], fg);
 		i++;
 	}
 	if (s[i])
